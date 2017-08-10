@@ -1,0 +1,10 @@
+To: backblaze@example.com
+From: backblazeserver@example.com
+Subject: Backblaze nightly backup
+
+Hello,
+
+Database backups to Backblaze B2 have completed.
+
+Today's upload results:
+
