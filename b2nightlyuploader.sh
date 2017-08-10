@@ -1,24 +1,23 @@
 #!/bin/bash
 
 # B2 sync script to upload local database files to backblaze b2 storage
-# Script run format:   ./b2sync.sh bucket/folder
-# Example run format:  ./b2sync.sh production/2016-01/databasedirectory
 
-# Notes:
-# Can be run just including the month #$ ./b2sync.sh production/2016-01 
-# Outputs to screen and to /b2logs/b2sync.timestamp file
 
-# Exclusion list should be checked before running to be sure only including .enc encrypted files
+## Notes: 
+# Excludes files ending in $EXCLIST
+# Output to screen and /b2logs/b2sync.timestamp file, final results emailed
+
+# Exclusion list should be checked before running to be sure only including encrypted (.enc) files
 # Current directory can be checked using:  find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -u
 
 DATE=`date +%Y-%m-%d`
 DBDATE=`date +%Y-%m --date='yesterday'` #date for yesterday's backup files
 TIMESTAMP=`date +'%F.%T'` #timestamp for logs file
 SCRIPTDIRECTORY='/home/backblaze'       # where script is saved
-BACKUPSDIRECTORY='/mnt/backupfiles'       # backups directory
-B2LOGSDIR='/home/backblaze/b2logs' # where logs are saved (if does not exist, script creates it)
+BACKUPSDIRECTORY='/mnt/backupfiles'     # backups directory
+B2LOGSDIR='/home/backblaze/b2logs'      # where logs are saved (if does not exist, script creates it)
 
-BUCKET='production'
+BUCKET='bucketname'
 LASTLOG=`ls -t $SCRIPTDIRECTORY/b2logs/ | head -n1`
 EXCLIST='(.*bz2$)|(.*sh$)|(.*ssl$)|(.*gz$)|(.*pem$)|(.*pub$)|(.*jd$)|(.*sql$)' #exclusion list
 
